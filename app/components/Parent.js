@@ -59,9 +59,10 @@ var Parent = React.createClass({
           <div className="jumbotron">
             <h2>React-ing to the News</h2>
             <hr />
-            <button className="btn btn-primary btn-lg" type="submit" onClick={this.handleScrape} >
-               <a href="/findred">SCRAPE</a>
-                </button>
+              
+            <a id="redditA" href="/findred">worldNews</a>
+ 
+
           </div>
 
           <div className="col-md-12">

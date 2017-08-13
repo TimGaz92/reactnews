@@ -98,7 +98,12 @@ app.get("/findred", function(req, res) {
       });
     console.log(results);
     console.log("test log----------------------------------------------------");
-    db.scrapedData.insert(results)//not working 
+    // db.scrapedInfo.insert(results)//not working , scraped data undefined
+    var scrapedInfo = new News ({
+      title: results.title,
+      link: results.title,
+      likes: 0
+    })
     res.redirect("/");
   });
 });
