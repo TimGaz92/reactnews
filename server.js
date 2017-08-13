@@ -3,6 +3,10 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var cheerio = require("cheerio");
+
+//call in ALL of the dependencies from the last scraper
+
 
 // Require Click schema
 var News = require("./models/click");
@@ -80,6 +84,27 @@ app.post("/api", function(req, res) {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get("/findred", function(req, res) {
+  request("https://www.reddit.com/r/worldnews", function(error, response, html) {
+      var $ = cheerio.load(html);
+      var results = [];
+      $("p.title").each(function(i, element) {
+      var title = $(element).text();
+      var link = $(element).children().attr("href");
+        results.push({
+          title: title,
+          link: link
+        });
+      });
+    console.log(results);
+    console.log("test log----------------------------------------------------");
+    db.scrapedData.insert(results)
+  });
+});
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);

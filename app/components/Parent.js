@@ -47,7 +47,7 @@ var Parent = React.createClass({
     this.setState({ likes: this.state.likes + 1 });
   },
   handleScrape: function(){
-    console.log('scraping');
+    console.log('scraping 2 ');
   },
 
   render: function() {
@@ -61,7 +61,8 @@ var Parent = React.createClass({
             <hr />
             <button
                   className="btn btn-primary btn-lg"
-                  type="button"
+                  type="submit"
+                  to="/findred"
                   onClick={this.handleScrape}
                 >
                 SCRAPE
