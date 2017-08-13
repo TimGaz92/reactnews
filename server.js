@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var cheerio = require("cheerio");
-
+var request = require("request");
 //call in ALL of the dependencies from the last scraper
 
 
@@ -98,7 +98,8 @@ app.get("/findred", function(req, res) {
       });
     console.log(results);
     console.log("test log----------------------------------------------------");
-    db.scrapedData.insert(results)
+    db.scrapedData.insert(results)//not working 
+    res.redirect("/");
   });
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
