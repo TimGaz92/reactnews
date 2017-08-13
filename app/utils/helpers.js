@@ -1,12 +1,13 @@
-//using axios to make life easier with get / post requests 
+// Here we will utilize the axios library to perform GET/POST requests
 var axios = require("axios");
 
 module.exports = {
+
   getNews: function() {
-    return axios.get("/all");
+    return axios.get("/api");
   },
 
-  saveNews: function(newsData) {
-    return axios.post("/all", newsData);
+  saveLikes: function(newsData) {
+    return axios.post("/api", newsData);
   }
 };

@@ -1,17 +1,17 @@
-var express = require('express');
+// Include Server Dependencies
+var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
-var cheerio = require("cheerio");
-var path = require("path");
 
-mongoose.Promise = Promise;
+// Require Click schema
+var News = require("./models/click");
 
-var News = require("./models/news");
 
 var app = express();
 
 var PORT = process.env.PORT || 3000;
+
 
 app.use(logger("dev"));
 app.use(bodyParser.json());
@@ -21,8 +21,10 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static("public"));
 
-//DB CONFIG 	MONGOOSE TO MONGODB
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// MongoDB configuration (Change this URL to your own DB)
 mongoose.connect("mongodb://localhost/reactNewsDB");
 var db = mongoose.connection;
 
@@ -31,20 +33,17 @@ db.on("error", function(err) {
 });
 
 db.once("open", function() {
-  console.log("Mongoose connection successfully made");
+  console.log("Mongoose connection successful.");
 });
 
-//ROUTES 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//main landing route 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-// find all route 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get("/all", function(req, res) {
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get("/api", function(req, res) {
   News.find({}).exec(function(err, doc) {
 
     if (err) {
@@ -56,29 +55,32 @@ app.get("/all", function(req, res) {
   });
 });
 
-//	news scraping route 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get("/find", function(req, res){
-request("https://www.reddit.com/r/worldnews", function(error, response, html) {
-  		var $ = cheerio.load(html);
-  		var results = [];
-  		$("p.title").each(function(i, element) {
-    	var title = $(element).text();
-    	var link = $(element).children().attr("href");
-    		results.push({
-      		title: title,
-      		link: link
-    		});
-  		});
-  	console.log(results);
-    console.log("test log # 1- server side scraping");
-  	db.scrapedData.insert(results)
-});
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+app.post("/api", function(req, res) {
+
+  var newsID = req.body.newsID;
+  var likes = parseInt(req.body.likes);
+
+  News.findOneAndUpdate({
+    newsID: newsID
+  }, {
+    $set: {
+      likes: likes
+    }
+  }, { upsert: true }).exec(function(err) {
+
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send("Updated likes Count!");
+    }
+  });
 });
 
-//launching server
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
 });
-
