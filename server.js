@@ -9,7 +9,7 @@ var request = require("request");
 
 
 // Require Click schema
-var News = require("./models/click");
+var News = require("./models/NewsSchema");
 
 
 var app = express();
@@ -29,7 +29,7 @@ app.use(express.static("public"));
 
 
 // MongoDB configuration (Change this URL to your own DB)
-mongoose.connect("mongodb://localhost/reactNewsDB");
+mongoose.connect("mongodb://localhost/WorldNewsDB");
 var db = mongoose.connection;
 
 db.on("error", function(err) {
