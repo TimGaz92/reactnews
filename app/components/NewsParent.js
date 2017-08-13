@@ -41,13 +41,13 @@ var Parent = React.createClass({
     }
   },
 
-  handleClick: function() {
-    this.setState({ clicks: this.state.clicks + 1 });
-  },
+  // handleClick: function() {
+  //   this.setState({ clicks: this.state.clicks + 1 });
+  // },
 
-  resetClick: function() {
-    this.setState({ clicks: 0 });
-  },
+  // resetClick: function() {
+  //   this.setState({ clicks: 0 });
+  // },
 
   render: function() {
     return (
