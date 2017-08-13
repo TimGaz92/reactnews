@@ -58,23 +58,9 @@ var Parent = React.createClass({
           <div className="jumbotron">
             <h2>React-ing to the News</h2>
             <hr />
-            <p>
-              <button
-                className="btn btn-primary btn-lg"
-                type="button"
-                onClick={this.handleClick}
-              >
-                CLICK ME!!!!
-              </button>
-
-              <button
-                className="btn btn-danger btn-lg"
-                type="button"
-                onClick={this.resetClick}
-              >
-                Reset
-              </button>
-            </p>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="dropDown">
+    <li><a id="redditA" href="/find"> World News</a></li>
+  </ul>
           </div>
 
           <div className="col-md-12">
