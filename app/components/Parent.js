@@ -23,9 +23,12 @@ var Parent = React.createClass({
 
     helpers.getNews()
       .then(function(response) {
-        var newNews = response.data.length;
+        // var newNews = response.data.length;
+        console.log("react state responce" + response);
         this.setState({
-          news: newNews
+          title: response.title,
+          link: response.link,
+          likes: response.likes
         });
         console.log("RESULTS", response);
         console.log("Saved clicks", newNews);
@@ -51,6 +54,7 @@ var Parent = React.createClass({
   },
 
   render: function() {
+return this.state.title.map(function(news, index){    
     return (
       <div className="container">
 
@@ -93,8 +97,9 @@ var Parent = React.createClass({
         </div>
       </div>
     );
-  }
-});
+  }.bind(this),
+); 
+}
 
 // Export the component back for use in other files
 module.exports = Parent;

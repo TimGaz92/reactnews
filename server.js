@@ -28,7 +28,7 @@ app.use(express.static("public"));
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// MongoDB configuration (Change this URL to your own DB)
+// MongoDB configuration 
 mongoose.connect("mongodb://localhost/WorldNewsDB");
 var db = mongoose.connection;
 
@@ -47,7 +47,7 @@ app.get("/", function(req, res) {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-app.get("/api", function(req, res) {
+app.get("/api/saved", function(req, res) {
   News.find({}).exec(function(err, doc) {
 
     if (err) {
@@ -87,25 +87,32 @@ app.post("/api", function(req, res) {
 app.get("/findred", function(req, res) {
   request("https://www.reddit.com/r/worldnews", function(error, response, html) {
       var $ = cheerio.load(html);
-      var results = [];
+      var results = {};
       $("p.title").each(function(i, element) {
-      var title = $(element).text();
-      var link = $(element).children().attr("href");
-        results.push({
-          title: title,
-          link: link
-        });
-      });
+      results.title = $(element).text();
+      results.link = $(element).children().attr("href");
+        // results.push({
+        //   title: title,
+        //   link: link
+        // });
+
     console.log(results);
+
     console.log("test log----------------------------------------------------");
     // db.scrapedInfo.insert(results)//not working , scraped data undefined
-    var scrapedInfo = new News ({
-      title: results.title,
-      link: results.title,
-      likes: 0
-    })
+    var scrapedInfo = new News (results);
+    scrapedInfo.save(function(err, data){
+      if (err){
+        console.log(err);
+      }else{
+        console.log(data);
+      } 
+    });
+  });    
+  });  
+
     res.redirect("/");
-  });
+
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
