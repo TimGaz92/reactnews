@@ -29,7 +29,7 @@ app.use(express.static("public"));
 
 
 // MongoDB configuration 
-mongoose.connect("mongodb://localhost/WorldNewsDB");
+mongoose.connect("mongodb://localhost/WorldNewsDevelopDB");
 var db = mongoose.connection;
 
 db.on("error", function(err) {

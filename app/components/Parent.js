@@ -54,7 +54,7 @@ var Parent = React.createClass({
   },
 
   render: function() {
-  return this.state.title.map(function(news, index){    
+  return this.state.title[0].map(function(news, index){   //.map function only works with arrays per react DOCS, need and alt to work with strings 
     return (
       <div className="container">
 
