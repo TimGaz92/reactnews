@@ -54,7 +54,7 @@ var Parent = React.createClass({
   },
 
   render: function() {
-return this.state.title.map(function(news, index){    
+  return this.state.title.map(function(news, index){    
     return (
       <div className="container">
 
@@ -96,10 +96,11 @@ return this.state.title.map(function(news, index){
           </div>
         </div>
       </div>
-    );
-  }.bind(this),
+    ); // end of return
+    }.bind(this),
 ); 
 }
+});
 
 // Export the component back for use in other files
 module.exports = Parent;

@@ -4,7 +4,7 @@ var axios = require("axios");
 module.exports = {
 
   getNews: function() {
-    return axios.get("/api/saved");
+    return axios.get("/api/saved")
     .then(function(results){
     	console.log("axios results" + results);
     	return results;
