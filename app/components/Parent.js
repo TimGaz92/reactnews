@@ -9,11 +9,7 @@ var helpers = require("../utils/helpers");
 var Parent = React.createClass({
 
   getInitialState: function() {
-    return {
-      title: "",
-      newsID: "Main",
-      likes: 0,
-      link: ""
+    return { savedArticles: ""
     };
   },
 
@@ -24,14 +20,14 @@ var Parent = React.createClass({
     helpers.getNews()
       .then(function(response) {
         // var newNews = response.data.length;
-        console.log("react state responce" + response);
+      //  console.log("react state responce" + response);
         this.setState({
-          title: response.title,
-          link: response.link,
-          likes: response.likes
+          savedArticles: response.data,
+        //   link: response.link,
+        //   likes: response.likes
         });
-        console.log("RESULTS", response);
-        console.log("Saved clicks", newNews);
+        console.log("RESULTS" + response.data);
+       // console.log("Saved clicks", newNews);
       }.bind(this));
   },
 
@@ -52,9 +48,16 @@ var Parent = React.createClass({
   handleScrape: function(){
     console.log('scraping 2 ');
   },
+renderEmpty: function (){
+      return (<div>
+      <h1> Nothing to display, sorry </h1>
+            </div>
+  )},
 
-  render: function() {
-  return this.state.title[0].map(function(news, index){   //.map function only works with arrays per react DOCS, need and alt to work with strings 
+
+
+  renderContainer: function() {
+  return this.state.savedArticles.map(function(news, index){   //.map function only works with arrays per react DOCS, need and alt to work with strings 
     return (
       <div className="container">
 
@@ -78,8 +81,8 @@ var Parent = React.createClass({
               <div className="panel-body text-center">
 
 
-                <h1>{this.state.title}</h1>
-                <h2>{this.state.link}</h2>
+                <h1>{news.title}</h1>
+                <h2>{news.link}</h2>
                 <button
                   className="btn btn-primary btn-lg"
                   type="button"
@@ -88,8 +91,8 @@ var Parent = React.createClass({
                 Like
                 </button>
                 <hr />
-                <Child likes={this.state.likes} />
-                <Child title={this.state.title} />
+                <Child likes={news.likes} />
+                <Child title={news.title} /> 
 
               </div>
             </div>
@@ -97,10 +100,21 @@ var Parent = React.createClass({
         </div>
       </div>
     ); // end of return
-    }.bind(this),
-); 
+    }.bind(this)); //end of render function 
+},
+//render articles 
+render: function(){
+  if (!this.state.savedArticles) {
+    return this.renderEmpty();
+  }
+  return this.renderContainer();
 }
 });
+//
+
+
+
+
 
 // Export the component back for use in other files
 module.exports = Parent;
