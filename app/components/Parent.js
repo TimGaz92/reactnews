@@ -17,18 +17,10 @@ var Parent = React.createClass({
   componentDidMount: function() {
     console.log("COMPONENT MOUNTED");
 
-    helpers.getNews()
-      .then(function(response) {
-        // var newNews = response.data.length;
-      //  console.log("react state responce" + response);
-        this.setState({
-          savedArticles: response.data,
-        //   link: response.link,
-        //   likes: response.likes
-        });
-        console.log("RESULTS" + response.data);
-       // console.log("Saved clicks", newNews);
-      }.bind(this));
+helpers.getSaved().then(function(articleData) {
+      this.setState({ savedArticles: articleData.data });
+      console.log("saved results", articleData.data);
+    }.bind(this))
   },
 
 
@@ -54,53 +46,54 @@ renderEmpty: function (){
             </div>
   )},
 
-
-
-  renderContainer: function() {
-  return this.state.savedArticles.map(function(news, index){   //.map function only works with arrays per react DOCS, need and alt to work with strings 
-    return (
+renderContainer: function() {
+    return  (
       <div className="container">
 
-        <div className="row">
+       <div className="row">
 
-          <div className="jumbotron">
+         <div className="jumbotron">
             <h2>React-ing to the News</h2>
             <hr />
               
-            <a id="redditA" href="/findred">worldNews</a>
- 
+           <a id="redditA" href="/findred">worldNews</a>
 
-          </div>
+         </div>
 
-          <div className="col-md-12">
+         <div className="col-md-12">
 
-            <div className="panel panel-default">
+           <div className="panel panel-default">
               <div className="panel-heading">
                 <h3 className="panel-title text-center">Top Stories</h3>
               </div>
               <div className="panel-body text-center">
 
+             {
+                this.state.savedArticles.map(function(article, index) {    
+                 return (
 
-                <h1>{news.title}</h1>
-                <h2>{news.link}</h2>
-                <button
-                  className="btn btn-primary btn-lg"
-                  type="button"
-                  onClick={this.handleLike}
-                >
-                Like
-                </button>
-                <hr />
-                <Child likes={news.likes} />
-                <Child title={news.title} /> 
+                   
+                   <div>
+                      <h3 key={index}>{article.title[0]}</h3> 
+                      <h4> {article.link} </h4>
+                      <h5> Likes: {article.likes} </h5>
+                       <hr />
+                      
+                    </div>
+                  )
+      
+               })
+              }
+                
 
-              </div>
+             </div>
+              }
             </div>
           </div>
         </div>
       </div>
     ); // end of return
-    }.bind(this)); //end of render function 
+    // }.bind(this)); //end of render function 
 },
 //render articles 
 render: function(){

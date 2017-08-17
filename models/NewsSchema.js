@@ -17,6 +17,6 @@ var NewsSchema = new Schema({
   }
 });
 
-var News = mongoose.model("scrapedInfo", NewsSchema);
+var News = mongoose.model("News", NewsSchema);
 
 module.exports = News;
