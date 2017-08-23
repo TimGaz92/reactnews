@@ -36,6 +36,7 @@ helpers.getSaved().then(function(articleData) {
 
   handleLike: function() {
     this.setState({ likes: this.state.likes + 1 });
+    console.log("liked an article");
   },
   handleScrape: function(){
     console.log('scraping 2 ');
@@ -76,7 +77,11 @@ renderContainer: function() {
                    <div>
                       <h3 key={index}>{article.title[0]}</h3> 
                       <h4> {article.link} </h4>
-                       <hr />
+                      <h5> likes: {article.likes} </h5>
+                        
+
+                    <hr />
+                      
                       
                     </div>
                   )

@@ -15,7 +15,7 @@ var Child = React.createClass({
     return (
 
         <div className="panel-body text-center">
-          <h5>{this.props.title} {this.props.likes}</h5>
+          <h5>{this.props.likes}</h5>
         </div>
     );
   }
