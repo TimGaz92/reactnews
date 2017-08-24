@@ -13,9 +13,11 @@ var NewsSchema = new Schema({
     type: String
   }, 
   likes: {
-  	type: Number
+  	type: Number, default: 0
   }
 });
+
+
 
 var News = mongoose.model("News", NewsSchema);
 

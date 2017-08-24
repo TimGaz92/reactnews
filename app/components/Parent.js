@@ -77,7 +77,7 @@ renderContainer: function() {
                    <div>
                       <h3 key={index}>{article.title[0]}</h3> 
                       <h4> {article.link} </h4>
-                      <h5> {article.likes} </h5>
+                      <h5> Likes: {article.likes} </h5>
                     <hr />
                       <a href="#" onClick={this.handleLike}>
                       <span className="glyphicon glyphicon-thumbs-up"> Like</span>
